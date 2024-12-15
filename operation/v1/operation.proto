@@ -1,0 +1,44 @@
+syntax = "proto3";
+
+package api.operation.v1;
+import "google/api/annotations.proto";
+
+option go_package = "review_o/api/operation/v1;v1";
+option java_multiple_files = true;
+option java_package = "api.operation.v1";
+
+service Operation {
+	rpc AuditReview (AuditReviewRequest) returns (AuditReviewReply) {
+		option (google.api.http) = {
+			post: "o/v1/review/audit",
+			body: "*"
+		};
+	}
+	rpc AuditAppeal (AuditAppealRequest) returns (AuditAppealReply) {
+		option (google.api.http) = {
+			post: "o/v1/appeal/audit",
+			body: "*"
+		};
+	}
+}
+
+message AuditReviewRequest {
+	int64 reviewID = 1;
+	int32 status = 2;
+	string opUser = 3;
+	string opReason = 4;
+	optional string opRemarks = 5;
+}
+message AuditReviewReply {}
+
+message AuditAppealRequest{
+	int64 appealID = 1 ;
+	int64 reviewID = 2 ;
+	int32 status = 3 ;
+	string opUser =4 ;
+	string opReason = 5;
+	optional string opRemarks = 6;
+}
+// 对申诉进行审核的返回值
+message AuditAppealReply{
+}
